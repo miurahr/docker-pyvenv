@@ -25,7 +25,7 @@ ENV PYPY_VER  pypy-2.5.0
 ## working user
 ENV RUN_USER pyuser
 ENV PYAPP_ROOT /opt/pyapp
-ENV PYENV_ROOT /opt/pyenv
+ENV PYENV_ROOT ${PYAPP_ROOT}/.pyenv
 
 ## python dependencies 
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -52,4 +52,4 @@ RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${PYENV_ROOT} 
 ENV PATH ${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
 
 ## install python
-RUN pyenv install ${PYPY3_VER} && pyenv rehash && pyenv global ${PYPY3_VER}
+RUN pyenv install ${PY_VER} && pyenv rehash && pyenv global ${PY_VER}

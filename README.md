@@ -35,13 +35,8 @@ ENTRYPOINT ["/home/pyuser/app/wsgi-start.py"]
 Directories and files
 ----------------------
 
-* /home/pyuser/        - working user
-* /home/pyuser/.pyenv/ - pyenv files
-
-Guest user
-------------
-
-Guest user has sudo privilege and you can easily add more packages
+* /opt/pyapp/        - app home
+* /opt/pyapp/.pyenv/ - pyenv files
 
 
 Python Versions
