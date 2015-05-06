@@ -19,8 +19,8 @@ MAINTAINER miurahr@linux.com
 ## versions
 ENV PY3_VER 3.4.3
 ENV PY2_VER 2.7.9
-ENV PYPY3_VER 2.4.0
-ENV PYPY_VER  2.5.0
+ENV PYPY3_VER pypy3-2.4.0
+ENV PYPY_VER  pypy-2.5.0
 
 ## dependencies 
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -51,8 +51,8 @@ ENV PATH ${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
 RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
 
 ## install python
-RUN pyenv install ${PY2_VER} && pyenv rehash && \
-    pyenv global ${PY2_VER} && pip install -U pip
+RUN pyenv install ${PYPY_VER} && pyenv rehash && \
+    pyenv global ${PYPY_VER} && pip install -U pip
 
 ## working environment for developer
 RUN mkdir -p ${HOME}/workspace && \
