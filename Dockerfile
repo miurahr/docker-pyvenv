@@ -24,7 +24,8 @@ ENV PYPY_VER  2.5.0
 
 ## working user
 ENV RUN_USER pyuser
-ENV RUN_HOME /home/pyuser
+ENV PYAPP_ROOT /opt/pyapp
+ENV PYENV_ROOT /opt/pyenv
 
 ## python dependencies 
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -37,16 +38,14 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get clean
 
 ## user setup
-RUN useradd -G sudo -d ${RUN_HOME} -m ${RUN_USER} && \
-    echo "Defaults    !authenticate" >> /etc/sudoers
+RUN useradd -d ${PYAPP_ROOT} -m ${RUN_USER}
 USER ${RUN_USER}
-ENV HOME ${RUN_HOME}
+ENV HOME ${PYAPP_ROOT}
 ENV USER ${RUN_USER}
-WORKDIR ${RUN_HOME}
+WORKDIR ${PYAPP_ROOT}
 
 ## pyenv setup
-RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${HOME}/.pyenv && \
-    echo 'export PYENV_ROOT=${HOME}/.pyenv' >> ${HOME}/.bashrc && \
+RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${PYENV_ROOT} && \
     echo 'eval "$(pyenv init -)"' >> ${HOME}/.bashrc
 
 ## working environment for developer
