@@ -12,55 +12,20 @@
 # project home: github.com/miurahr/docker-pyvenv
 #
 ####################################################
-#
-FROM miurahr/pyvenv-base
+FROM ubuntu:12.04.2
 MAINTAINER miurahr@linux.com
 
-## known versions
-ENV PY3_VER 3.4.3
-ENV PY2_VER 2.7.9
-ENV PYPY3_VER pypy3-2.4.0
-ENV PYPY_VER  pypy-2.5.0
+ENV PY_VER 3.4.3
+ENV RUN_USER pyuser
+ENV PYAPP_ROOT /opt/pyapp
+ENV PYENV_ROOT ${PYAPP_ROOT}/.pyenv
 
-## user setup
-RUN useradd -m pyuser && \
-    echo "pyuser ALL=(ALL) NOPASSWD: ALL" >>  /etc/sudoers
+COPY setup-venv.sh /tmp/
+RUN chmod +x /tmp/setup-venv.sh
+RUN /tmp/setup-venv.sh
 
-USER pyuser
-ENV HOME /home/pyuser
-ENV USER pyuser
-ENV PYENV_ROOT ${HOME}/.pyenv
-WORKDIR /home/pyuser
-
-## pyenv setup
-RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${PYENV_ROOT} && \
-    echo 'eval "$(pyenv init -)"' >> ${HOME}/.bashrc
-ENV PATH ${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
-
-## pyenv-virtualenv plugin
-RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
-
-## install python2/python3/pypy/pypy3
-RUN pyenv install ${PY3_VER}   && \
-    pyenv install ${PY2_VER}   && \
-    pyenv install ${PYPY3_VER} && \
-    pyenv install ${PYPY_VER}  && \
-    pyenv rehash
-
-## default ${PY3_VER} and install ipython on ${PY3_VER}
-RUN pyenv global ${PY3_VER} && pip install -U pip && \
-    pip install ipython && \
-    pip install "ipython[test]"
-
-## working environment for developer
-RUN mkdir -p ${HOME}/workspace && \
-    byobu-enable
-
-## docker configurations
-VOLUME ["${HOME}/workspace"]
-ENTRYPOINT ["/bin/bash"]
-
-## now you can run here by 'docker run -it miurahr/pyvenv'
-## It automatically launch shell and byobu.
-## Please don't forget add '-it'(interactive/terminal) argument option.
-## Docker will enter guest environment as non-login session.
+## docker execute setup
+USER ${RUN_USER}
+ENV HOME ${PYAPP_ROOT}
+ENV USER ${RUN_USER}
+WORKDIR ${PYAPP_ROOT}

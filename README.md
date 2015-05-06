@@ -3,66 +3,26 @@ docker-pyvenv
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=miurahr&url=https://github.com/miurahr/docker-pyvenv)
 
-Python application development environment based on pyenv
-
-
-How to use
------------
-
-Login, launch byobu and activating python
-
-```
-$ docker exec -it miurahr/pyvenv
-```
-
-Please see command details at [Pyenv Commands](https://github.com/yyuu/pyenv/blob/master/COMMANDS.md)
-
+Python application environment based on pyenv
 
 Directories and files
 ----------------------
 
-For developer environment
-
-* /home/pyuser/        - working user
-* /home/pyuser/.pyenv/ - pyenv files
-
 For production environment
 
-* /opt/pyapp/     - application deployment
-* /opt/pyenv/     - PYENV_ROOT
-
-
-Guest user
-------------
-
-Guest user 'pyuser' has sudo privilege and you can easily add more packages.
-In production package, guest user 'pyapp' has no sudo permission.
+* /opt/pyapp/       - application deployment
+* /opt/pyapp/.pyenv - PYENV_ROOT
 
 
 Python Versions
 ----------------------
 
-It has following python versions:
+Provide python versions:
 
-* tag latest
-  - Python 3.4.3, 2.7.9
+  - CPython 3.4.3
+  - CPython 2.7.9
   - PyPy  2.5.0
   - PyPy3 2.4.0
-
-* tag pypy
-  - PyPy  2.5.0
-
-* tag pypy3
-  - PyPy3 2.4.0
-
-
-* tag 3, 3.4
-  - Python 3.4.3
-
-* tag 2, 2.7
-  - Python 2.7.9
-
-ipython is also pre-installed for py34.
 
 How to build
 --------------------
