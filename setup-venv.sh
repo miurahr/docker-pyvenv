@@ -13,7 +13,7 @@
 # project home: github.com/miurahr/docker-pyvenv-dev
 #
 ####################################################
-
+set -e
 # part1: install pytnon versions and cleanup
 
 # Environment variable for building
