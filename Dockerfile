@@ -49,7 +49,7 @@ RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${PYENV_ROOT} 
     echo 'eval "$(pyenv init -)"' >> ${HOME}/.bashrc
 
 ## working environment for developer
-ENV PATH ${HOME}/.pyenv/shims:${HOME}/.pyenv/bin:${PATH}
+ENV PATH ${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
 
 ## install python
 RUN pyenv install ${PY3_VER}         && \
