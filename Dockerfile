@@ -50,15 +50,9 @@ ENV PATH ${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
 ## pyenv-virtualenv plugin
 RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
 
-## install python2/python3/pypy/pypy3
-RUN pyenv install ${PY3_VER}         && \
-    pyenv install ${PY2_VER}         && \
-    pyenv install pypy3-${PYPY3_VER} && \
-    pyenv install pypy-${PYPY_VER}   && \
-    pyenv rehash
-
-## default ${PY3_VER} and install ipython on ${PY3_VER}
-RUN pyenv global ${PY3_VER} && pip install -U pip && \
+## install python
+RUN pyenv install ${PY3_VER} && pyenv rehash && \
+    pyenv global ${PY3_VER} && pip install -U pip && \
     pip install ipython && \
     pip install "ipython[test]"
 
