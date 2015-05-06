@@ -12,7 +12,7 @@
 # project home: github.com/miurahr/docker-pyvenv
 #
 ####################################################
-FROM ubuntu:12.04.2
+FROM ubuntu:14.04.2
 MAINTAINER miurahr@linux.com
 
 ENV PY_VER 3.4.3
