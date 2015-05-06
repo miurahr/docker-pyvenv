@@ -33,8 +33,8 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get clean
 
 ## user setup
-RUN useradd -G sudo -m pyuser && \
-    echo "Defaults    !authenticate" >> /etc/sudoers
+RUN useradd -m pyuser && \
+    echo "pyuser ALL=(ALL) NOPASSWD: ALL" >>  /etc/sudoers
 
 USER pyuser
 ENV HOME /home/pyuser
