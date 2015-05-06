@@ -48,14 +48,14 @@ env DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
 RUN_USER=${RUN_USER:-pyapp}
 PYAPP_ROOT=${PYAPP_ROOT:-/opt/pyapp}
 PYENV_ROOT=${PYENV_ROOT:-/opt/pyapp/.pyenv}
+RC_FILE=/etc/bash.bashrc
 
 function run_as_user () {
   sudo -u ${RUN_USER} -E -H $*
 }
 
 function append_profile () {
-  FILE=/etc/profile.d/pyenv.sh
-  echo $* >> $FILE
+  echo "$*" >> $RC_FILE
 }
 
 function install_python_version () {
@@ -67,11 +67,16 @@ function install_python_version () {
   run_as_user pip install -U pip
 }
 
-useradd -m ${RUN_USER}
+useradd -d ${PYAPP_ROOT} -m ${RUN_USER}
 
 ## pyenv setup
 run_as_user git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${PYENV_ROOT}
 run_as_user git clone --quiet --depth 1 https://github.com/yyuu/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
+
+append_profile "export PYENV_ROOT=${PYENV_ROOT}"
+append_profile "export PATH=${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
+append_profile 'eval "$(pyenv init -)"'
+source $RC_FILE
 
 ## install python
 if [ "${PY_VERS}" == "" ]; then
@@ -82,10 +87,6 @@ else
     install_python_version $v
   done
 fi
-
-append_profile "export PYENV_ROOT=${PYENV_ROOT}"
-append_profile "export PATH=${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
-append_profile 'eval "$(pyenv init -)"'
 
 ## clean up
 env DEBIAN_FRONTEND=noninteractive apt-get -y remove git-core \
