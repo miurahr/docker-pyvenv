@@ -51,8 +51,8 @@ ENV PATH ${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
 RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
 
 ## install python
-RUN pyenv install ${PYPY_VER} && pyenv rehash && \
-    pyenv global ${PYPY_VER} && pip install -U pip
+RUN pyenv install ${PYPY3_VER} && pyenv rehash && \
+    pyenv global ${PYPY3_VER} && pip install -U pip
 
 ## working environment for developer
 RUN mkdir -p ${HOME}/workspace && \
