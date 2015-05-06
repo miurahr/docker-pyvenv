@@ -19,8 +19,8 @@ MAINTAINER miurahr@linux.com
 ## versions
 ENV PY3_VER 3.4.3
 ENV PY2_VER 2.7.9
-ENV PYPY3_VER 2.4.0
-ENV PYPY_VER  2.5.0
+ENV PYPY3_VER pypy3-2.4.0
+ENV PYPY_VER  pypy-2.5.0
 
 ## working user
 ENV RUN_USER pyuser
@@ -52,4 +52,4 @@ RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${PYENV_ROOT} 
 ENV PATH ${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
 
 ## install python
-RUN pyenv install ${PY2_VER} && pyenv rehash && pyenv global ${PY2_VER}
+RUN pyenv install ${PYPY_VER} && pyenv rehash && pyenv global ${PYPY_VER}
