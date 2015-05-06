@@ -52,4 +52,4 @@ RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${PYENV_ROOT} 
 ENV PATH ${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
 
 ## install python
-RUN pyenv install ${PY_VER} && pyenv rehash && pyenv global ${PY_VER}
+RUN pyenv install ${PY3_VER} && pyenv rehash && pyenv global ${PY3_VER}
