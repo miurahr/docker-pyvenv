@@ -18,6 +18,20 @@ $ docker exec -it miurahr/pyvenv
 Please see command details at [Pyenv Commands](https://github.com/yyuu/pyenv/blob/master/COMMANDS.md)
 
 
+Deploy your application
+-----------------------
+
+You can deploy your production applicaiton by preparing Dockerfile
+such as
+
+```
+FROM miurahr/pyvenv:3.4.3
+COPY app /home/pyuser/app
+ENV PYENV_VERSION 3.4.3
+WORKDIR /home/pyuser/app
+ENTRYPOINT ["/home/pyuser/app/wsgi-start.py"]
+```
+
 Directories and files
 ----------------------
 

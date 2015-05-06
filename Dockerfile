@@ -16,6 +16,16 @@
 FROM eboraas/debian:jessie
 MAINTAINER miurahr@linux.com
 
+## versions
+ENV PY3_VER 3.4.3
+ENV PY2_VER 2.7.9
+ENV PYPY3_VER 2.4.0
+ENV PYPY_VER  2.5.0
+
+## working user
+ENV RUN_USER pyuser
+ENV RUN_HOME /home/pyuser
+
 ## python dependencies 
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get -q -y upgrade && \
@@ -27,12 +37,12 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get clean
 
 ## user setup
-RUN useradd -G sudo -m pyuser && \
+RUN useradd -G sudo -d ${RUN_HOME} -m ${RUN_USER} && \
     echo "Defaults    !authenticate" >> /etc/sudoers
-USER pyuser
-ENV HOME /home/pyuser
-ENV USER pyuser
-WORKDIR /home/pyuser
+USER ${RUN_USER}
+ENV HOME ${RUN_HOME}
+ENV USER ${RUN_USER}
+WORKDIR ${RUN_HOME}
 
 ## pyenv setup
 RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${HOME}/.pyenv && \
@@ -42,13 +52,7 @@ RUN git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${HOME}/.pyenv
 ## working environment for developer
 ENV PATH ${HOME}/.pyenv/shims:${HOME}/.pyenv/bin:${PATH}
 
-## docker configurations
-ENTRYPOINT ["/bin/bash"]
-
-## You can run here by 'docker run -it miurahr/pyvenv'
-## It automatically launch shell.
-## Please don't forget add '-it'(interactive/terminal) argument option.
-## Docker will enter guest environment as non-login session.
-##
-## you may want to install python by 'pyenv install <version>' first time.
-## and 'docker commit' to save its environment for further development.
+## install python
+RUN pyenv install ${PY3_VER}         && \
+    pyenv rehash && \
+    pyenv global ${PY3_VER}
