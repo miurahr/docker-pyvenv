@@ -21,8 +21,16 @@ ENV PYAPP_ROOT /opt/pyapp
 ENV PYENV_ROOT ${PYAPP_ROOT}/.pyenv
 
 COPY setup-venv.sh /tmp/
-RUN chmod +x /tmp/setup-venv.sh
+COPY prepare-venv.sh /tmp/
+COPY clean-venv.sh /tmp/
+RUN chmod +x /tmp/*-venv.sh
+RUN /tmp/prepare-venv.sh
+
+USER ${RUN_USER}
 RUN /tmp/setup-venv.sh
+
+USER root
+RUN /tmp/clean-venv.sh
 
 ## docker execute setup
 USER ${RUN_USER}
