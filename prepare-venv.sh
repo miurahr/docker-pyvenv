@@ -37,19 +37,15 @@ function run_as_user () {
   sudo -u ${RUN_USER} -E -H env PATH=${PATH} $*
 }
 
-function append_profile () {
-  echo "$*" >> $RC_FILE
-}
-
 useradd -d ${PYAPP_ROOT} -m ${RUN_USER}
 
 ## pyenv setup
 run_as_user git clone --quiet --depth 1 https://github.com/yyuu/pyenv.git ${PYENV_ROOT}
 run_as_user git clone --quiet --depth 1 https://github.com/yyuu/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv
 
-append_profile "export PYENV_ROOT=${PYENV_ROOT}"
-append_profile "export PATH=${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
-append_profile 'eval "$(pyenv init -)"'
-append_profile 'eval "$(pyenv virtualenv-init -)"'
+echo "export PYENV_ROOT=${PYENV_ROOT}" >> $RC_FILE
+echo "export PATH=${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}" >> $RC_FILE
+echo 'eval "$(pyenv init -)"' >> $RC_FILE
+echo 'eval "$(pyenv virtualenv-init -)"' >> $RC_FILE
 
 exit 0
