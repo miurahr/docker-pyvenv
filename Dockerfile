@@ -15,7 +15,7 @@
 FROM ubuntu:14.04.2
 MAINTAINER miurahr@linux.com
 
-ENV PY_VER 3.4.3
+ENV PY_VER 2.7.9
 ENV RUN_USER pyuser
 ENV PYAPP_ROOT /opt/pyapp
 ENV PYENV_ROOT ${PYAPP_ROOT}/.pyenv
