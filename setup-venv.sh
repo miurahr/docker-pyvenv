@@ -76,6 +76,7 @@ run_as_user git clone --quiet --depth 1 https://github.com/yyuu/pyenv-virtualenv
 append_profile "export PYENV_ROOT=${PYENV_ROOT}"
 append_profile "export PATH=${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
 append_profile 'eval "$(pyenv init -)"'
+append_profile 'eval "$(pyenv virtualenv-init -)"'
 source $RC_FILE
 
 ## install python
