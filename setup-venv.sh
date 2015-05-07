@@ -38,10 +38,10 @@ RC_FILE=/etc/bash.bashrc
 function install_python_version () {
   local ver=$1
 
-  run_as_user pyenv install $ver
-  run_as_user pyenv rehash
-  run_as_user pyenv global  $ver
-  run_as_user pip install -U pip
+  pyenv install $ver
+  pyenv rehash
+  pyenv global  $ver
+  pip install --upgrade pip
 }
 
 source $RC_FILE
