@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 ####################################################
 # build pyenv developer environment on docker
 #
@@ -13,7 +13,6 @@
 # project home: github.com/miurahr/docker-pyvenv-dev
 #
 ####################################################
-set -e
 # Environment variable for building
 #
 # if PY_VERS is not empty, it build all of python versions.
@@ -30,10 +29,9 @@ else
   echo "default version is ${PY_VER}."
 fi
 
-## user setup
-PYAPP_ROOT=${PYAPP_ROOT:-/opt/pyapp}
-PYENV_ROOT=${PYENV_ROOT:-/opt/pyapp/.pyenv}
-RC_FILE=/etc/bash.bashrc
+source /etc/bash.bashrc
+export PYENV_ROOT=${PYENV_ROOT:-/opt/pyapp/.pyenv}
+export PATH=${PYENV_ROOT}/bin:${PYENV_ROOT}/shims:${PATH}
 
 function install_python_version () {
   local ver=$1
@@ -44,7 +42,6 @@ function install_python_version () {
   pip install --upgrade pip
 }
 
-source $RC_FILE
 
 ## install python
 if [ "${PY_VERS}" == "" ]; then
