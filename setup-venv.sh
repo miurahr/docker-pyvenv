@@ -51,7 +51,7 @@ PYENV_ROOT=${PYENV_ROOT:-/opt/pyapp/.pyenv}
 RC_FILE=/etc/bash.bashrc
 
 function run_as_user () {
-  sudo -u ${RUN_USER} -E -H $*
+  sudo -u ${RUN_USER} -E -H env PATH=${PATH} $*
 }
 
 function append_profile () {
